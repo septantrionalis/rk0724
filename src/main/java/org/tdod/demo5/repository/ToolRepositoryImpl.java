@@ -8,6 +8,7 @@ import org.tdod.demo5.entity.ToolTypeEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository
@@ -21,9 +22,22 @@ public class ToolRepositoryImpl implements ToolRepository {
         list.add(new Tool("JAKR", ToolTypeEnum.JACKHAMMER,"Ridgid"));
     }
 
+    @Override
     public List<Tool> getAvailableTools(int offset, int size) {
         Tool[] paginated = list.stream().skip(offset).limit(size).toArray(Tool[]::new);
         return Arrays.asList(paginated);
+    }
+
+    @Override
+    public Tool getToolByCode(String code) {
+        Tool tool;
+        try {
+            tool = list.stream().filter(c -> c.getToolCode().equals(code)).collect(Collectors.toList()).get(0);
+        } catch (Exception e) {
+            return null;
+        }
+
+        return tool;
     }
 
 }

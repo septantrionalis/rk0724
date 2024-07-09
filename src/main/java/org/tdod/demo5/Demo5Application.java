@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.tdod.demo5.entity.RentalAgreement;
 import org.tdod.demo5.entity.Tool;
 import org.tdod.demo5.service.TestService;
 import org.tdod.demo5.service.ToolService;
@@ -50,10 +51,10 @@ public class Demo5Application {
     }
 
     @GetMapping("/checkout")
-    public String checkout(@RequestParam(value = "tool-code") String toolcodeStr,
-                           @RequestParam(value = "rental-day-count") String rentalDayCountStr,
-                           @RequestParam(value = "discount-percent") String discountPercentStr,
-                           @RequestParam(value = "checkout-date") String checkoutDateStr) {
+    public RentalAgreement checkout(@RequestParam(value = "tool-code") String toolcodeStr,
+                                    @RequestParam(value = "rental-day-count") String rentalDayCountStr,
+                                    @RequestParam(value = "discount-percent") String discountPercentStr,
+                                    @RequestParam(value = "checkout-date") String checkoutDateStr) {
 
         // Validate rental day count.
         int rentalDayCount;
@@ -80,19 +81,25 @@ public class Demo5Application {
         }
 
         // Validate checkout date.
-        LocalDate date;
+        LocalDate checkoutDate;
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
-            date = LocalDate.parse(checkoutDateStr, formatter);
+            checkoutDate = LocalDate.parse(checkoutDateStr, formatter);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkout-date is invalid. Format is MMddyyyy");
         }
 
         System.out.println(toolcodeStr);
         System.out.println(rentalDayCountStr);
-        System.out.println(date);
+        System.out.println(checkoutDate);
 
-        return "test";
+        RentalAgreement rentalAgreement = toolService.getRentalAgreement(toolcodeStr, rentalDayCount, discountPercent, checkoutDate);
+
+        if (rentalAgreement == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to find " + toolcodeStr);
+        }
+
+        return rentalAgreement;
     }
 
 }

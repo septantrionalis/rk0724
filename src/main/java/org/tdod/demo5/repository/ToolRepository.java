@@ -8,4 +8,6 @@ public interface ToolRepository {
 
     List<Tool> getAvailableTools(int offset, int size);
 
+    Tool getToolByCode(String code);
+
 }
