@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public enum ToolTypeEnum {
 
-    CHAINSAW("Chainsaw", new BigDecimal("1.99"), true, true, false),
-    LADDER("Ladder", new BigDecimal("1.49"), true, false, true),
+    LADDER("Ladder", new BigDecimal("1.99"), true, true, false),
+    CHAINSAW("Chainsaw", new BigDecimal("1.49"), true, false, true),
     JACKHAMMER("Jackhammer", new BigDecimal("2.99"), true, false, false);
 
     private String name;

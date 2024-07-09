@@ -1,10 +1,12 @@
 package org.tdod.demo5.service;
 
+import jdk.jshell.execution.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tdod.demo5.entity.RentalAgreement;
 import org.tdod.demo5.entity.Tool;
 import org.tdod.demo5.repository.ToolRepository;
+import org.tdod.demo5.util.Utility;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,7 +37,7 @@ public class ToolServiceImpl implements ToolService {
         rentalAgreement.setCheckoutDate(checkoutDate);
         rentalAgreement.setDueDate(calculateDueDate(rentalDayCount, checkoutDate));
         rentalAgreement.setDailyRentalCharge(calculateDailyRentalCharge(tool));
-        rentalAgreement.setChargeDays(calculateChargeDays(tool, checkoutDate, rentalAgreement.getDueDate()));
+        rentalAgreement.setChargeDays(calculateChargeDays(rentalAgreement, checkoutDate));
         rentalAgreement.setPrediscountCharge(calculatePreDiscountCharge(tool, rentalAgreement.getChargeDays()));
         rentalAgreement.setDiscountPercent(discountPercent);
         rentalAgreement.setDiscountAmount(calculateDiscountAmount(rentalAgreement.getPrediscountCharge(), discountPercent));
@@ -52,35 +54,40 @@ public class ToolServiceImpl implements ToolService {
         return tool.getToolType().getDailyCharge();
     }
 
-    private int calculateChargeDays(Tool tool, LocalDate checkoutDate, LocalDate dueDate) {
+    private int calculateChargeDays(RentalAgreement rentalAgreement, LocalDate checkoutDate) {
+        Tool tool = rentalAgreement.getTool();
+        LocalDate dueDate = rentalAgreement.getDueDate();
+        int totalChargeDays = rentalAgreement.getRentalDays();
+        // int totalChargeDays = 0;
         LocalDate currentDate = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), checkoutDate.getDayOfMonth());
         LocalDate endDate = LocalDate.of(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth());;;
 
-        int chargeDays = 0;
         while (!currentDate.isAfter(endDate)) {
-            currentDate = currentDate.plusDays(1);
-            if (!isHolidayCharge(tool, currentDate) ||
-                !isWeekendOrWeekdayCharge(tool, currentDate)) {
-                chargeDays++;
+
+            if (subtractCharge(tool, currentDate)) {
+                totalChargeDays--;
             }
+
+            currentDate = currentDate.plusDays(1);
         }
 
-        return chargeDays;
+        return totalChargeDays;
     }
 
-    private boolean isWeekendOrWeekdayCharge(Tool tool, LocalDate date) {
+    private boolean subtractCharge(Tool tool, LocalDate date) {
+        // Weekend
+        if (Utility.isWeekend(date) && !tool.getToolType().isWeekendCharge()) {
+            return true;
+        }
 
-        return true;
-    }
-
-    private boolean isHolidayCharge(Tool tool, LocalDate date) {
-        if (tool.getToolType().isHolidayCharge()) {
-            return false;
+        // Weekday
+        if (Utility.isWeekday(date) && !tool.getToolType().isWeekdayCharge()) {
+            return true;
         }
 
         // Independence Day
         LocalDate independenceDay = LocalDate.of(date.getYear(), Month.JULY, 4);
-        if (date.equals(independenceDay)) {
+        if (date.equals(independenceDay) && !tool.getToolType().isHolidayCharge()) {
             System.out.println("Holiday found for independence day: " + date);
             return true;
         }
@@ -91,7 +98,7 @@ public class ToolServiceImpl implements ToolService {
         while (firstMondayInSeptember.getDayOfWeek() != DayOfWeek.MONDAY) {
             firstMondayInSeptember = firstMondayInSeptember.plusDays(1);
         }
-        if (date.equals(firstMondayInSeptember)) {
+        if (date.equals(firstMondayInSeptember) && !tool.getToolType().isHolidayCharge()) {
             System.out.println("Holiday found for labor day: " + date);
             return true;
         }

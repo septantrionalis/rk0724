@@ -16,7 +16,7 @@ public class ToolRepositoryImpl implements ToolRepository {
     private final static List<Tool> list = new ArrayList<>();
     {
         list.add(new Tool("CHNS", ToolTypeEnum.CHAINSAW,"Stihl"));
-        list.add(new Tool("LADW", ToolTypeEnum.CHAINSAW,"Werner"));
+        list.add(new Tool("LADW", ToolTypeEnum.LADDER,"Werner"));
         list.add(new Tool("JAKD", ToolTypeEnum.JACKHAMMER,"DeWalt"));
         list.add(new Tool("JAKR", ToolTypeEnum.JACKHAMMER,"Ridgid"));
     }
