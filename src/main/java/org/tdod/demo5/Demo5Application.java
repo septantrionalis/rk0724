@@ -50,30 +50,47 @@ public class Demo5Application {
     }
 
     @GetMapping("/checkout")
-    public String checkout(@RequestParam(value = "tool-code") String toolcode,
-                           @RequestParam(value = "rental-day-count") String rentalDayCount,
-                           @RequestParam(value = "checkout-date") String checkoutDate) {
+    public String checkout(@RequestParam(value = "tool-code") String toolcodeStr,
+                           @RequestParam(value = "rental-day-count") String rentalDayCountStr,
+                           @RequestParam(value = "discount-percent") String discountPercentStr,
+                           @RequestParam(value = "checkout-date") String checkoutDateStr) {
 
-        if (toolcode == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tool-code is required");
-        }
-        if (rentalDayCount == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rental-day-count is required");
+        // Validate rental day count.
+        int rentalDayCount;
+        try {
+            rentalDayCount = Integer.parseInt(rentalDayCountStr);
+        } catch (NumberFormatException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rental-day-count must be an integer");
         }
 
+        if (rentalDayCount < 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rental-day-count must be greater than 1");
+        }
+
+        // Validate discount percent
+        int discountPercent;
+        try {
+            discountPercent = Integer.parseInt(discountPercentStr);
+        } catch (NumberFormatException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "discount-percent must be an integer");
+        }
+
+        if (discountPercent < 0 || discountPercent > 100) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "discount-percent must be between 0 and 100");
+        }
+
+        // Validate checkout date.
         LocalDate date;
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
-            date = LocalDate.parse(checkoutDate, formatter);
+            date = LocalDate.parse(checkoutDateStr, formatter);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkout-date is invalid. Format is MMddyyyy");
         }
 
-        System.out.println(toolcode);
-        System.out.println(rentalDayCount);
+        System.out.println(toolcodeStr);
+        System.out.println(rentalDayCountStr);
         System.out.println(date);
-
-
 
         return "test";
     }
