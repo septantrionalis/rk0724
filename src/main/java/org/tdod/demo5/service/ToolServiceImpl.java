@@ -8,6 +8,7 @@ import org.tdod.demo5.entity.ToolTypeEnum;
 import org.tdod.demo5.repository.ToolRepository;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
@@ -40,6 +41,9 @@ public class ToolServiceImpl implements ToolService {
         rentalAgreement.setChargeDays(calculateChargeDays(checkoutDate, rentalAgreement.getDueDate()));
         rentalAgreement.setPrediscountCharge(calculatePreDiscountCharge(tool, rentalAgreement.getChargeDays()));
         rentalAgreement.setDiscountPercent(discountPercent);
+        rentalAgreement.setDiscountAmount(calculateDiscountAmount(rentalAgreement.getPrediscountCharge(), discountPercent));
+        rentalAgreement.setFinalCharge(calculateFinalCharge(rentalAgreement.getPrediscountCharge(), rentalAgreement.getDiscountAmount()));
+
 
         return rentalAgreement;
     }
@@ -96,4 +100,17 @@ public class ToolServiceImpl implements ToolService {
         return tool.getToolType().getDailyCharge().multiply(chargeDaysBigDecimal);
     }
 
+    private BigDecimal calculateDiscountAmount(BigDecimal preDiscountCharge, int discountPercent) {
+        BigDecimal percentValue = BigDecimal.valueOf(discountPercent);
+        BigDecimal decimalValue = percentValue.divide(BigDecimal.valueOf(100));
+
+        BigDecimal result = preDiscountCharge.multiply(decimalValue).setScale(2, RoundingMode.UP);
+        System.out.println(result);
+
+        return result;
+    }
+
+    private BigDecimal calculateFinalCharge(BigDecimal preDiscountCharge, BigDecimal discountAmount) {
+        return preDiscountCharge.subtract(discountAmount);
+    }
 }
