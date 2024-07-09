@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tdod.demo5.entity.RentalAgreement;
 import org.tdod.demo5.entity.Tool;
-import org.tdod.demo5.entity.ToolTypeEnum;
 import org.tdod.demo5.repository.ToolRepository;
 
 import java.math.BigDecimal;
@@ -12,8 +11,6 @@ import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,7 +40,6 @@ public class ToolServiceImpl implements ToolService {
         rentalAgreement.setDiscountPercent(discountPercent);
         rentalAgreement.setDiscountAmount(calculateDiscountAmount(rentalAgreement.getPrediscountCharge(), discountPercent));
         rentalAgreement.setFinalCharge(calculateFinalCharge(rentalAgreement.getPrediscountCharge(), rentalAgreement.getDiscountAmount()));
-
 
         return rentalAgreement;
     }
