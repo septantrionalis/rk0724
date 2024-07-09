@@ -58,7 +58,6 @@ public class ToolServiceImpl implements ToolService {
 
         int chargeDays = 0;
         while (!currentDate.isAfter(endDate)) {
-            System.out.println("Evaluating " + currentDate);
             currentDate = currentDate.plusDays(1);
             if (!isHoliday(currentDate)) {
                 chargeDays++;
@@ -100,10 +99,7 @@ public class ToolServiceImpl implements ToolService {
         BigDecimal percentValue = BigDecimal.valueOf(discountPercent);
         BigDecimal decimalValue = percentValue.divide(BigDecimal.valueOf(100));
 
-        BigDecimal result = preDiscountCharge.multiply(decimalValue).setScale(2, RoundingMode.UP);
-        System.out.println(result);
-
-        return result;
+        return preDiscountCharge.multiply(decimalValue).setScale(2, RoundingMode.UP);
     }
 
     private BigDecimal calculateFinalCharge(BigDecimal preDiscountCharge, BigDecimal discountAmount) {

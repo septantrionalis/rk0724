@@ -72,6 +72,8 @@ public class Demo5Application {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to find " + toolcodeStr);
         }
 
+        System.out.println(rentalAgreement);
+
         return rentalAgreement;
     }
 

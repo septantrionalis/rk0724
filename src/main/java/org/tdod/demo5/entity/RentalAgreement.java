@@ -96,4 +96,24 @@ public class RentalAgreement {
     public void setFinalCharge(BigDecimal finalCharge) {
         this.finalCharge = finalCharge;
     }
+
+    public String toString() {
+        StringBuilder builder = new StringBuilder()
+                .append("Tool Code: ")
+                .append(tool.getToolCode()).append("\n")
+                .append("Tool Type: " + tool.getToolType() + "\n")
+                .append("Tool Brand: " + tool.getBrand() + "\n")
+                .append("Rental Days: " + rentalDays + "\n")
+                .append("Checkout Date: " + checkoutDate + "\n")
+                .append("Due Date: " + dueDate + "\n")
+                .append("Daily Rental Charge: ")
+                .append(dailyRentalCharge).append("\n")
+                .append("Charge Days: " + chargeDays + "\n")
+                .append("Prediscount Charge: " + prediscountCharge + "\n")
+                .append("Discount Percent: " + discountPercent + "\n")
+                .append("Discount Amount: " + discountAmount + "\n")
+                .append("Final Charge: " + finalCharge + "\n");
+
+        return builder.toString();
+    }
 }

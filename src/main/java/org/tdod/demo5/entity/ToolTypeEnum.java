@@ -14,12 +14,12 @@ public enum ToolTypeEnum {
     private boolean weekendCharge;
     private boolean holidayCharge;
 
-    private ToolTypeEnum(String name, BigDecimal dailyCharge, boolean weekdayCharge, boolean weekendCharge, boolean hoidayCharge) {
+    private ToolTypeEnum(String name, BigDecimal dailyCharge, boolean weekdayCharge, boolean weekendCharge, boolean holidayCharge) {
         this.name = name;
         this.dailyCharge = dailyCharge;
         this.weekdayCharge = weekdayCharge;
         this.weekendCharge = weekendCharge;
-        this.holidayCharge = hoidayCharge;
+        this.holidayCharge = holidayCharge;
     }
 
     public BigDecimal getDailyCharge() {
