@@ -89,10 +89,6 @@ public class Demo5Application {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkout-date is invalid. Format is MMddyyyy");
         }
 
-        System.out.println(toolcodeStr);
-        System.out.println(rentalDayCountStr);
-        System.out.println(checkoutDate);
-
         RentalAgreement rentalAgreement = toolService.getRentalAgreement(toolcodeStr, rentalDayCount, discountPercent, checkoutDate);
 
         if (rentalAgreement == null) {

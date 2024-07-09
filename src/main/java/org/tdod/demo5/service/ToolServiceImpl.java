@@ -34,16 +34,36 @@ public class ToolServiceImpl implements ToolService {
         rentalAgreement.setRentalDays(rentalDayCount);
         rentalAgreement.setCheckoutDate(checkoutDate);
         rentalAgreement.setDueDate(calculateDueDate(rentalDayCount, checkoutDate));
+        rentalAgreement.setDailyRentalCharge(calculateDailyRentalCharge(tool));
 
-        rentalAgreement.setTool(tool);
-        rentalAgreement.setDailyRentalCharge(new BigDecimal("1.11"));
+        calculateChargeDays(checkoutDate, rentalAgreement.getDueDate());
+
 
         return rentalAgreement;
     }
 
     private LocalDate calculateDueDate(int rentalDayCount, LocalDate checkoutDate) {
-        LocalDate dueDate = checkoutDate.plusDays(rentalDayCount);
-        return dueDate;
+        return checkoutDate.plusDays(rentalDayCount);
+    }
+
+    private BigDecimal calculateDailyRentalCharge(Tool tool) {
+        return tool.getToolType().getDailyCharge();
+    }
+
+    private int calculateChargeDays(LocalDate checkoutDate, LocalDate dueDate) {
+        LocalDate currentDate = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), checkoutDate.getDayOfMonth());
+        LocalDate endDate = LocalDate.of(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth());;;
+
+        while (!currentDate.isAfter(endDate)) {
+            System.out.println(currentDate);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return 0;
+    }
+
+    private void isHoliday() {
+
     }
 
 }
