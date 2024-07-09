@@ -35,7 +35,7 @@ public class ToolServiceImpl implements ToolService {
         rentalAgreement.setCheckoutDate(checkoutDate);
         rentalAgreement.setDueDate(calculateDueDate(rentalDayCount, checkoutDate));
         rentalAgreement.setDailyRentalCharge(calculateDailyRentalCharge(tool));
-        rentalAgreement.setChargeDays(calculateChargeDays(checkoutDate, rentalAgreement.getDueDate()));
+        rentalAgreement.setChargeDays(calculateChargeDays(tool, checkoutDate, rentalAgreement.getDueDate()));
         rentalAgreement.setPrediscountCharge(calculatePreDiscountCharge(tool, rentalAgreement.getChargeDays()));
         rentalAgreement.setDiscountPercent(discountPercent);
         rentalAgreement.setDiscountAmount(calculateDiscountAmount(rentalAgreement.getPrediscountCharge(), discountPercent));
@@ -52,14 +52,15 @@ public class ToolServiceImpl implements ToolService {
         return tool.getToolType().getDailyCharge();
     }
 
-    private int calculateChargeDays(LocalDate checkoutDate, LocalDate dueDate) {
+    private int calculateChargeDays(Tool tool, LocalDate checkoutDate, LocalDate dueDate) {
         LocalDate currentDate = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), checkoutDate.getDayOfMonth());
         LocalDate endDate = LocalDate.of(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth());;;
 
         int chargeDays = 0;
         while (!currentDate.isAfter(endDate)) {
             currentDate = currentDate.plusDays(1);
-            if (!isHoliday(currentDate)) {
+            if (!isHolidayCharge(tool, currentDate) ||
+                !isWeekendOrWeekdayCharge(tool, currentDate)) {
                 chargeDays++;
             }
         }
@@ -67,7 +68,16 @@ public class ToolServiceImpl implements ToolService {
         return chargeDays;
     }
 
-    private boolean isHoliday(LocalDate date) {
+    private boolean isWeekendOrWeekdayCharge(Tool tool, LocalDate date) {
+
+        return true;
+    }
+
+    private boolean isHolidayCharge(Tool tool, LocalDate date) {
+        if (tool.getToolType().isHolidayCharge()) {
+            return false;
+        }
+
         // Independence Day
         LocalDate independenceDay = LocalDate.of(date.getYear(), Month.JULY, 4);
         if (date.equals(independenceDay)) {
