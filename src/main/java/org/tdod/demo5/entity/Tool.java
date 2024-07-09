@@ -3,14 +3,14 @@ package org.tdod.demo5.entity;
 public class Tool {
 
     private String toolCode;
-    private String toolType;
+    private ToolTypeEnum toolType;
     private String brand;
 
     public Tool() {
 
     }
 
-    public Tool(String toolCode, String toolType, String brand) {
+    public Tool(String toolCode, ToolTypeEnum toolType, String brand) {
         this.toolCode = toolCode;
         this.toolType = toolType;
         this.brand = brand;
@@ -24,11 +24,11 @@ public class Tool {
         this.toolCode = toolCode;
     }
 
-    public String getToolType() {
+    public ToolTypeEnum getToolType() {
         return toolType;
     }
 
-    public void setToolType(String toolType) {
+    public void setToolType(ToolTypeEnum toolType) {
         this.toolType = toolType;
     }
 

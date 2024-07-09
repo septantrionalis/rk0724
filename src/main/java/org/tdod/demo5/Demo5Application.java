@@ -12,6 +12,8 @@ import org.tdod.demo5.entity.Tool;
 import org.tdod.demo5.service.TestService;
 import org.tdod.demo5.service.ToolService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @SpringBootApplication
@@ -44,8 +46,36 @@ public class Demo5Application {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid size value");
         }
 
-        List<Tool> tools = toolService.getAvailableTools(Integer.parseInt(offset), Integer.parseInt(size));
-        return tools;
+        return toolService.getAvailableTools(Integer.parseInt(offset), Integer.parseInt(size));
+    }
+
+    @GetMapping("/checkout")
+    public String checkout(@RequestParam(value = "tool-code") String toolcode,
+                           @RequestParam(value = "rental-day-count") String rentalDayCount,
+                           @RequestParam(value = "checkout-date") String checkoutDate) {
+
+        if (toolcode == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tool-code is required");
+        }
+        if (rentalDayCount == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rental-day-count is required");
+        }
+
+        LocalDate date;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+            date = LocalDate.parse(checkoutDate, formatter);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "checkout-date is invalid. Format is MMddyyyy");
+        }
+
+        System.out.println(toolcode);
+        System.out.println(rentalDayCount);
+        System.out.println(date);
+
+
+
+        return "test";
     }
 
 }
