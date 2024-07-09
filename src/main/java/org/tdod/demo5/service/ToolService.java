@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ToolService {
 
-    List<Tool> getAvailableTools(int start, int number);
+    List<Tool> getAvailableTools(int offset, int size);
 
 }

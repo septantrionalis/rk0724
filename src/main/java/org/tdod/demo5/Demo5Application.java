@@ -3,9 +3,11 @@ package org.tdod.demo5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.tdod.demo5.entity.Tool;
 import org.tdod.demo5.service.TestService;
 import org.tdod.demo5.service.ToolService;
@@ -32,8 +34,17 @@ public class Demo5Application {
     }
 
     @GetMapping("/getavailabletools")
-    public List<Tool> getAvailableTools() {
-        List<Tool> tools = toolService.getAvailableTools(0,4);
+    public List<Tool> getAvailableTools(@RequestParam(value = "offset", defaultValue = "0") String offset,
+                                        @RequestParam(value = "size", defaultValue = "100") String size) {
+        if (!offset.matches("-?(0|[1-9]\\d*)")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid offset value");
+        }
+
+        if (!size.matches("-?(0|[1-9]\\d*)")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid size value");
+        }
+
+        List<Tool> tools = toolService.getAvailableTools(Integer.parseInt(offset), Integer.parseInt(size));
         return tools;
     }
 

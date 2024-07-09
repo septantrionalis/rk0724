@@ -20,8 +20,8 @@ public class ToolRepositoryImpl implements ToolRepository {
         list.add(new Tool("JAKR","Jackhammer","Ridgid"));
     }
 
-    public List<Tool> getAvailableTools(int start, int number) {
-        Tool[] paginated = list.stream().skip(start).limit(number).toArray(Tool[]::new);
+    public List<Tool> getAvailableTools(int offset, int size) {
+        Tool[] paginated = list.stream().skip(offset).limit(size).toArray(Tool[]::new);
         return Arrays.asList(paginated);
     }
 

@@ -14,8 +14,8 @@ public class ToolServiceImpl implements ToolService {
     @Autowired
     private ToolRepository toolRepository;
 
-    public List<Tool> getAvailableTools(int start, int number) {
-        return toolRepository.getAvailableTools(0,4);
+    public List<Tool> getAvailableTools(int offset, int size) {
+        return toolRepository.getAvailableTools(offset, size);
     }
 
 
