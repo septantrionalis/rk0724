@@ -38,8 +38,8 @@ public class ToolServiceImpl implements ToolService {
         rentalAgreement.setDueDate(calculateDueDate(rentalDayCount, checkoutDate));
         rentalAgreement.setDailyRentalCharge(calculateDailyRentalCharge(tool));
         rentalAgreement.setChargeDays(calculateChargeDays(checkoutDate, rentalAgreement.getDueDate()));
-
-
+        rentalAgreement.setPrediscountCharge(calculatePreDiscountCharge(tool, rentalAgreement.getChargeDays()));
+        rentalAgreement.setDiscountPercent(discountPercent);
 
         return rentalAgreement;
     }
@@ -89,6 +89,11 @@ public class ToolServiceImpl implements ToolService {
 
         return false;
 
+    }
+
+    private BigDecimal calculatePreDiscountCharge(Tool tool, int chargeDays) {
+        BigDecimal chargeDaysBigDecimal = BigDecimal.valueOf(chargeDays);
+        return tool.getToolType().getDailyCharge().multiply(chargeDaysBigDecimal);
     }
 
 }
