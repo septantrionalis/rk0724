@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.tdod.demo5.entity.RentalAgreement;
 import org.tdod.demo5.entity.Tool;
-import org.tdod.demo5.service.TestService;
 import org.tdod.demo5.service.ToolService;
 
 import java.time.LocalDate;
@@ -22,32 +21,10 @@ import java.util.List;
 public class Demo5Application {
 
     @Autowired
-    private TestService testService;
-
-    @Autowired
     private ToolService toolService;
 
     public static void main(String[] args) {
         SpringApplication.run(Demo5Application.class, args);
-    }
-
-    @GetMapping("/test")
-    public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
-        return String.format(testService.getTest(name));
-    }
-
-    @GetMapping("/getavailabletools")
-    public List<Tool> getAvailableTools(@RequestParam(value = "offset", defaultValue = "0") String offset,
-                                        @RequestParam(value = "size", defaultValue = "100") String size) {
-        if (!offset.matches("-?(0|[1-9]\\d*)")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid offset value");
-        }
-
-        if (!size.matches("-?(0|[1-9]\\d*)")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid size value");
-        }
-
-        return toolService.getAvailableTools(Integer.parseInt(offset), Integer.parseInt(size));
     }
 
     @GetMapping("/checkout")
@@ -97,5 +74,20 @@ public class Demo5Application {
 
         return rentalAgreement;
     }
+
+    @GetMapping("/getavailabletools")
+    public List<Tool> getAvailableTools(@RequestParam(value = "offset", defaultValue = "0") String offset,
+                                        @RequestParam(value = "size", defaultValue = "100") String size) {
+        if (!offset.matches("-?(0|[1-9]\\d*)")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid offset value");
+        }
+
+        if (!size.matches("-?(0|[1-9]\\d*)")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid size value");
+        }
+
+        return toolService.getAvailableTools(Integer.parseInt(offset), Integer.parseInt(size));
+    }
+
 
 }
