@@ -21,10 +21,12 @@ public class ToolServiceImpl implements ToolService {
     @Autowired
     private ToolRepository toolRepository;
 
+    @Override
     public List<Tool> getAvailableTools(int offset, int size) {
         return toolRepository.getAvailableTools(offset, size);
     }
 
+    @Override
     public RentalAgreement getRentalAgreement(String toolCode, int rentalDayCount, int discountPercent, LocalDate checkoutDate) {
         Tool tool = toolRepository.getToolByCode(toolCode);
         if (tool == null) {

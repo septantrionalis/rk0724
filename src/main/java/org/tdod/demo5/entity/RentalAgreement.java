@@ -1,14 +1,19 @@
 package org.tdod.demo5.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.tdod.demo5.util.Utility;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class RentalAgreement {
 
     private Tool tool;
     private int rentalDays;
+    @JsonFormat(pattern="MM/dd/yyyy")
     private LocalDate checkoutDate;
+    @JsonFormat(pattern="MM/dd/yyyy")
     private LocalDate dueDate;
     private BigDecimal dailyRentalCharge;
     private int chargeDays;
@@ -98,22 +103,26 @@ public class RentalAgreement {
     }
 
     public String toString() {
+
+
+
         StringBuilder builder = new StringBuilder()
                 .append("Tool Code: ")
                 .append(tool.getToolCode()).append("\n")
                 .append("Tool Type: " + tool.getToolType() + "\n")
                 .append("Tool Brand: " + tool.getBrand() + "\n")
                 .append("Rental Days: " + rentalDays + "\n")
-                .append("Checkout Date: " + checkoutDate + "\n")
-                .append("Due Date: " + dueDate + "\n")
-                .append("Daily Rental Charge: ")
+                .append("Checkout Date: " + Utility.getFormattedDate(checkoutDate) + "\n")
+                .append("Due Date: " + Utility.getFormattedDate(dueDate) + "\n")
+                .append("Daily Rental Charge: $")
                 .append(dailyRentalCharge).append("\n")
                 .append("Charge Days: " + chargeDays + "\n")
-                .append("Prediscount Charge: " + prediscountCharge + "\n")
-                .append("Discount Percent: " + discountPercent + "\n")
-                .append("Discount Amount: " + discountAmount + "\n")
-                .append("Final Charge: " + finalCharge + "\n");
+                .append("Prediscount Charge: $" + prediscountCharge + "\n")
+                .append("Discount Percent: " + discountPercent + "%\n")
+                .append("Discount Amount: $" + discountAmount + "\n")
+                .append("Final Charge: $" + finalCharge + "\n");
 
         return builder.toString();
     }
+
 }

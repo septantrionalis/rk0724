@@ -22,12 +22,6 @@ public class ToolRepositoryImpl implements ToolRepository {
     }
 
     @Override
-    public List<Tool> getAvailableTools(int offset, int size) {
-        Tool[] paginated = list.stream().skip(offset).limit(size).toArray(Tool[]::new);
-        return Arrays.asList(paginated);
-    }
-
-    @Override
     public Tool getToolByCode(String code) {
         Tool tool;
         try {
@@ -37,6 +31,12 @@ public class ToolRepositoryImpl implements ToolRepository {
         }
 
         return tool;
+    }
+
+    @Override
+    public List<Tool> getAvailableTools(int offset, int size) {
+        Tool[] paginated = list.stream().skip(offset).limit(size).toArray(Tool[]::new);
+        return Arrays.asList(paginated);
     }
 
 }

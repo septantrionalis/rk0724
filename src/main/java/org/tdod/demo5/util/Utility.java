@@ -2,6 +2,7 @@ package org.tdod.demo5.util;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Utility {
 
@@ -19,6 +20,11 @@ public class Utility {
                 || dayOfWeek == DayOfWeek.WEDNESDAY
                 || dayOfWeek == DayOfWeek.THURSDAY
                 || dayOfWeek == DayOfWeek.FRIDAY;
+    }
+
+    public static String getFormattedDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/YY");
+        return date.format(formatter);
     }
 
 }
