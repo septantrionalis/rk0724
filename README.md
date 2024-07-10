@@ -29,7 +29,7 @@ date". This excludes the day the tool is checked out, but includes the day the i
 calculation is the checkout day is a free day. All days afterward and including the due date can be charged.
 For example:<BR>
 Checkout date: 01/01/2024<BR>
-Rental day count: 4<BB>
+Rental day count: 4<BR>
 Charge days will be calculated on 01/02/2024, 01/03/2024, 01/04/2024, and 01/05/2024<BR>
 
 ## Output
