@@ -1,14 +1,11 @@
 package org.tdod.demo5.repository;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.tdod.demo5.entity.Tool;
 import org.tdod.demo5.entity.ToolTypeEnum;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository
 public class ToolRepositoryImpl implements ToolRepository {
