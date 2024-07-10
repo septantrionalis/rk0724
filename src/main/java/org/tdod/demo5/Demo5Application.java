@@ -27,6 +27,14 @@ public class Demo5Application {
         SpringApplication.run(Demo5Application.class, args);
     }
 
+    /**
+     * This is the entry point for the exercise. Its a basic GET rest call to get RentalAgreement data.
+     * @param toolcodeStr the tool code in question.
+     * @param rentalDayCountStr The number of days for which the customer wants to rent the tool. (e.g. 4 days)
+     * @param discountPercentStr As a whole number, 0-100 (e.g. 20 = 20%)
+     * @param checkoutDateStr Check out date
+     * @return a rental agreement or 400 Bad Request if something went wrong.
+     */
     @GetMapping("/checkout")
     public RentalAgreement checkout(@RequestParam(value = "tool-code") String toolcodeStr,
                                     @RequestParam(value = "rental-day-count") String rentalDayCountStr,
@@ -77,6 +85,12 @@ public class Demo5Application {
         return rentalAgreement;
     }
 
+    /**
+     * This method was used for testing and not needed to the exercise.
+     * @param offset the offset of the data set
+     * @param size the size of the data set.
+     * @return a paginated list of tools
+     */
     @GetMapping("/getavailabletools")
     public List<Tool> getAvailableTools(@RequestParam(value = "offset", defaultValue = "0") String offset,
                                         @RequestParam(value = "size", defaultValue = "100") String size) {
