@@ -19,7 +19,18 @@ I've leveraged a simple SpringBoot application architecture to handle the code. 
 - RentalAgreement.java is the end result. <BR>
 - Test cases are in the test folder. Currently, the main unit test is "Demo5ApplicationTests".
 <BR><BR>
-When hitting the endpoint, I output the data in two places. Once for the console and once for the request response.
+When hitting the endpoint, I output the data in two places. Once for the console and once for the request response.<BR>
+<BR>
+
+## Design decision:
+
+A question I would ask product is what days do we charge the customer. When calculating days to charge,
+is the checkout day a free day or is the due date a free date.
+My assumption is the checkout AND due date are both included in the cost. <BR>
+IE, if the customer checks out a tool on 01/01/2024 for 4 days, they will be charged for : <BR>
+01/01/2024, 01/02/2024, 01/03/2024, and 01/04/2024
+
+## Output
 
 Sample Console output:
 ```
