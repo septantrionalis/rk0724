@@ -55,13 +55,7 @@ public class ToolServiceImpl implements ToolService {
      * @return The due date.
      */
     private LocalDate calculateDueDate(int rentalDayCount, LocalDate checkoutDate) {
-        // A question I would ask product is what days do we charge the customer. When calculating days to charge,
-        // is the checkout day a free day or is the due date a free date.
-        // My assumption is The checkout AND due date are both included in the cost.
-        // IE, if the customer checks out a tool on 01/01/2024 for 4 days, they will be charged for :
-        // 01/01/2024, 01/02/2024, 01/03/2024, and 01/04/2024
-
-        return checkoutDate.plusDays(rentalDayCount - 1);
+        return checkoutDate.plusDays(rentalDayCount);
     }
 
     /**
@@ -84,10 +78,12 @@ public class ToolServiceImpl implements ToolService {
         Tool tool = rentalAgreement.getTool();
         LocalDate dueDate = rentalAgreement.getDueDate();
         int totalChargeDays = rentalAgreement.getRentalDays();
-        LocalDate currentDate = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), checkoutDate.getDayOfMonth());
+        // Count of chargeable days, from day after checkout through and including due date
+        LocalDate currentDate = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), checkoutDate.getDayOfMonth()).plusDays(1);
         LocalDate endDate = LocalDate.of(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth());;;
 
         while (!currentDate.isAfter(endDate)) {
+            System.out.println(currentDate);
 
             if (subtractCharge(tool, currentDate)) {
                 totalChargeDays--;

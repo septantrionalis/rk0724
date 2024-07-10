@@ -50,7 +50,7 @@ class Demo5ApplicationTests {
         assertThat(rentalAgreement.getRentalDays()).isEqualTo(3);
         LocalDate checkoutDate = LocalDate.of(2024, Month.JULY, 2);
         assertThat(rentalAgreement.getCheckoutDate()).isEqualTo(checkoutDate);
-        LocalDate dueDate = LocalDate.of(2024, Month.JULY, 4);
+        LocalDate dueDate = LocalDate.of(2024, Month.JULY, 5);
         assertThat(rentalAgreement.getDueDate()).isEqualTo(dueDate);
         assertThat(rentalAgreement.getDailyRentalCharge()).isEqualTo(new BigDecimal("1.99"));
         assertThat(rentalAgreement.getChargeDays()).isEqualTo(2);
@@ -75,7 +75,7 @@ class Demo5ApplicationTests {
         assertThat(rentalAgreement.getRentalDays()).isEqualTo(5);
         LocalDate checkoutDate = LocalDate.of(2015, Month.JULY, 2);
         assertThat(rentalAgreement.getCheckoutDate()).isEqualTo(checkoutDate);
-        LocalDate dueDate = LocalDate.of(2015, Month.JULY, 6);
+        LocalDate dueDate = LocalDate.of(2015, Month.JULY, 7);
         assertThat(rentalAgreement.getDueDate()).isEqualTo(dueDate);
         assertThat(rentalAgreement.getDailyRentalCharge()).isEqualTo(new BigDecimal("1.49"));
         assertThat(rentalAgreement.getChargeDays()).isEqualTo(3);
@@ -100,7 +100,7 @@ class Demo5ApplicationTests {
         assertThat(rentalAgreement.getRentalDays()).isEqualTo(6);
         LocalDate checkoutDate = LocalDate.of(2015, Month.SEPTEMBER, 3);
         assertThat(rentalAgreement.getCheckoutDate()).isEqualTo(checkoutDate);
-        LocalDate dueDate = LocalDate.of(2015, Month.SEPTEMBER, 8);
+        LocalDate dueDate = LocalDate.of(2015, Month.SEPTEMBER, 9);
         assertThat(rentalAgreement.getDueDate()).isEqualTo(dueDate);
         assertThat(rentalAgreement.getDailyRentalCharge()).isEqualTo(new BigDecimal("2.99"));
         assertThat(rentalAgreement.getChargeDays()).isEqualTo(3);
@@ -125,14 +125,14 @@ class Demo5ApplicationTests {
         assertThat(rentalAgreement.getRentalDays()).isEqualTo(9);
         LocalDate checkoutDate = LocalDate.of(2015, Month.JULY, 2);
         assertThat(rentalAgreement.getCheckoutDate()).isEqualTo(checkoutDate);
-        LocalDate dueDate = LocalDate.of(2015, Month.JULY, 10);
+        LocalDate dueDate = LocalDate.of(2015, Month.JULY, 11);
         assertThat(rentalAgreement.getDueDate()).isEqualTo(dueDate);
         assertThat(rentalAgreement.getDailyRentalCharge()).isEqualTo(new BigDecimal("2.99"));
-        assertThat(rentalAgreement.getChargeDays()).isEqualTo(7);
-        assertThat(rentalAgreement.getPrediscountCharge()).isEqualTo(new BigDecimal("20.93"));
+        assertThat(rentalAgreement.getChargeDays()).isEqualTo(6);
+        assertThat(rentalAgreement.getPrediscountCharge()).isEqualTo(new BigDecimal("17.94"));
         assertThat(rentalAgreement.getDiscountPercent()).isEqualTo(Integer.valueOf(discountPercentStr));
         assertThat(rentalAgreement.getDiscountAmount()).isEqualTo(new BigDecimal("0.00"));
-        assertThat(rentalAgreement.getFinalCharge()).isEqualTo(new BigDecimal("20.93"));
+        assertThat(rentalAgreement.getFinalCharge()).isEqualTo(new BigDecimal("17.94"));
     }
 
     @Test
@@ -150,7 +150,7 @@ class Demo5ApplicationTests {
         assertThat(rentalAgreement.getRentalDays()).isEqualTo(4);
         LocalDate checkoutDate = LocalDate.of(2020, Month.JULY, 2);
         assertThat(rentalAgreement.getCheckoutDate()).isEqualTo(checkoutDate);
-        LocalDate dueDate = LocalDate.of(2020, Month.JULY, 5);
+        LocalDate dueDate = LocalDate.of(2020, Month.JULY, 6);
         assertThat(rentalAgreement.getDueDate()).isEqualTo(dueDate);
         assertThat(rentalAgreement.getDailyRentalCharge()).isEqualTo(new BigDecimal("2.99"));
         assertThat(rentalAgreement.getChargeDays()).isEqualTo(2);

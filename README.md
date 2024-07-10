@@ -22,13 +22,15 @@ I've leveraged a simple SpringBoot application architecture to handle the code. 
 When hitting the endpoint, I output the data in two places. Once for the console and once for the request response.<BR>
 <BR>
 
-## Design decision:
+## Design decision
 
-A question I would ask product is what days do we charge the customer. When calculating days to charge,
-is the checkout day a free day or is the due date a free date.
-My assumption is the checkout AND due date are both included in the cost. <BR>
-IE, if the customer checks out a tool on 01/01/2024 for 4 days, they will be charged for : <BR>
-01/01/2024, 01/02/2024, 01/03/2024, and 01/04/2024
+Charge days is "Count of chargeable days, from day after checkout through and including due
+date". This excludes the day the tool is checked out, but includes the day the item is checked in. The way I do my
+calculation is the checkout day is a free day. All days afterward and including the due date can be charged.
+For example:<BR>
+Checkout date: 01/01/2024<BR>
+Rental day count: 4<BB>
+Charge days will be calculated on 01/02/2024, 01/03/2024, 01/04/2024, and 01/05/2024<BR>
 
 ## Output
 
