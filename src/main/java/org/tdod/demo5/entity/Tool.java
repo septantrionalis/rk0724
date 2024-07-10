@@ -1,5 +1,8 @@
 package org.tdod.demo5.entity;
 
+/**
+ * A basic POJO for a Tool entity object.
+ */
 public class Tool {
 
     private String toolCode;

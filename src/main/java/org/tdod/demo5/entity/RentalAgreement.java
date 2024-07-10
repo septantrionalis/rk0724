@@ -7,6 +7,9 @@ import org.tdod.demo5.util.Utility;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * A basic POJO representation of a Rental Agreement.
+ */
 public class RentalAgreement {
 
     private Tool tool;
@@ -103,9 +106,6 @@ public class RentalAgreement {
     }
 
     public String toString() {
-
-
-
         StringBuilder builder = new StringBuilder()
                 .append("Tool Code: ")
                 .append(tool.getToolCode()).append("\n")

@@ -2,6 +2,9 @@ package org.tdod.demo5.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * This is a enumeration of the tool types supported by the application.
+ */
 public enum ToolTypeEnum {
 
     LADDER("Ladder", new BigDecimal("1.99"), true, true, false),

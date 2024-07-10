@@ -16,9 +16,10 @@ I've leveraged a simple SpringBoot application architecture to handle the code. 
 - Demo5Application.java is the RestController and the start of the app.<BR>
 - ToolService.java is the service layer that handles the Java business logic. This will contain the logic needed to calculate dates, discounts, etc.<BR>
 - ToolRepository.java will construct the data and return the data as needed by the user. A real spring boot app would go to a database, but for the purposes of this exercice, the data is hard coded.<BR>
-- entity.RentalAgreement.java is the end result. <BR>
+- RentalAgreement.java is the end result. <BR>
 - Test cases are in the test folder. Currently, the main unit test is "Demo5ApplicationTests".
-<BR>
+<BR><BR>
+When hitting the endpoint, I output the data in two places. Once for the console and once for the request response.
 
 Sample Console output:
 ```

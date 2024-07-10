@@ -48,19 +48,36 @@ public class ToolServiceImpl implements ToolService {
         return rentalAgreement;
     }
 
+    /**
+     * Calculates the due date based on the day count and checkout date.
+     * @param rentalDayCount The rental day count as requested by the customer
+     * @param checkoutDate the checkout date as requested by the customer
+     * @return The due date.
+     */
     private LocalDate calculateDueDate(int rentalDayCount, LocalDate checkoutDate) {
         return checkoutDate.plusDays(rentalDayCount - 1);
     }
 
+    /**
+     * Calculate the daily rental charge. This essentially just returns the daily charge as defined by the tool.
+     * @param tool the tool in question.
+     * @return The daily rental charge.
+     */
     private BigDecimal calculateDailyRentalCharge(Tool tool) {
         return tool.getToolType().getDailyCharge();
     }
 
+    /**
+     * This is the business logic to calculate the charge days. This method needs to determine if the item has a charge based on
+     * whether its a weekend, weekday, or a holiday and if the item is exempt from those days.
+     * @param rentalAgreement The rental agreement which has various needed parameters to do the calculation.
+     * @param checkoutDate the checkout date.
+     * @return The total charge days.
+     */
     private int calculateChargeDays(RentalAgreement rentalAgreement, LocalDate checkoutDate) {
         Tool tool = rentalAgreement.getTool();
         LocalDate dueDate = rentalAgreement.getDueDate();
         int totalChargeDays = rentalAgreement.getRentalDays();
-        // int totalChargeDays = 0;
         LocalDate currentDate = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), checkoutDate.getDayOfMonth());
         LocalDate endDate = LocalDate.of(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth());;;
 
@@ -76,6 +93,12 @@ public class ToolServiceImpl implements ToolService {
         return totalChargeDays;
     }
 
+    /**
+     * Determines if the day is "free". If it is, then return true. Otherwise false.
+     * @param tool the tool in question.
+     * @param date the day that the tool will be rented out.
+     * @return true if the charge is free, false otherwise.
+     */
     private boolean subtractCharge(Tool tool, LocalDate date) {
         // Weekend
         if (Utility.isWeekend(date) && !tool.getToolType().isWeekendCharge()) {
@@ -109,11 +132,23 @@ public class ToolServiceImpl implements ToolService {
 
     }
 
+    /**
+     * Calculates the pre discount charge.
+     * @param tool the tool in question.
+     * @param chargeDays the total charge days.
+     * @return the pre discount charge.
+     */
     private BigDecimal calculatePreDiscountCharge(Tool tool, int chargeDays) {
         BigDecimal chargeDaysBigDecimal = BigDecimal.valueOf(chargeDays);
         return tool.getToolType().getDailyCharge().multiply(chargeDaysBigDecimal);
     }
 
+    /**
+     * Calculates the discount amount.
+     * @param preDiscountCharge the pre discount charge.
+     * @param discountPercent the discount percent.
+     * @return the discount amount based on the parameters above.
+     */
     private BigDecimal calculateDiscountAmount(BigDecimal preDiscountCharge, int discountPercent) {
         BigDecimal percentValue = BigDecimal.valueOf(discountPercent);
         BigDecimal decimalValue = percentValue.divide(BigDecimal.valueOf(100));
@@ -121,6 +156,12 @@ public class ToolServiceImpl implements ToolService {
         return preDiscountCharge.multiply(decimalValue).setScale(2, RoundingMode.UP);
     }
 
+    /**
+     * Determines the final charge.
+     * @param preDiscountCharge the pre discount charge.
+     * @param discountAmount the discount amount.
+     * @return the final charge.
+     */
     private BigDecimal calculateFinalCharge(BigDecimal preDiscountCharge, BigDecimal discountAmount) {
         return preDiscountCharge.subtract(discountAmount);
     }
