@@ -36,37 +36,37 @@ Charge days will be calculated on 01/02/2024, 01/03/2024, 01/04/2024, and 01/05/
 
 Sample Console output:
 ```
-Tool Code: JAKR
-Tool Type: Jackhammer
-Tool Brand: Ridgid
-Rental Days: 4
-Checkout Date: 07/02/22
-Due Date: 07/05/22
-Daily Rental Charge: $2.99
-Charge Days: 1
-Prediscount Charge: $2.99
-Discount Percent: 50%
-Discount Amount: $1.50
-Final Charge: $1.49
+Tool Code: LADW
+Tool Type: Ladder
+Tool Brand: Werner
+Rental Days: 3
+Checkout Date: 07/02/20
+Due Date: 07/05/20
+Daily Rental Charge: $1.99
+Charge Days: 2
+Prediscount Charge: $3.98
+Discount Percent: 10%
+Discount Amount: $0.40
+Final Charge: $3.58
 ```
 
 Sample REST Response:<BR>
 ```
 {
     "tool": {
-        "toolCode": "JAKR",
-        "toolType": "JACKHAMMER",
-        "brand": "Ridgid"
+        "toolCode": "LADW",
+        "toolType": "LADDER",
+        "brand": "Werner"
     },
-    "rentalDays": 4,
-    "checkoutDate": "07/02/2022",
-    "dueDate": "07/05/2022",
-    "dailyRentalCharge": 2.99,
-    "chargeDays": 1,
-    "prediscountCharge": 2.99,
-    "discountPercent": 50,
-    "discountAmount": 1.50,
-    "finalCharge": 1.49
+    "rentalDays": 3,
+    "checkoutDate": "07/02/2020",
+    "dueDate": "07/05/2020",
+    "dailyRentalCharge": 1.99,
+    "chargeDays": 2,
+    "prediscountCharge": 3.98,
+    "discountPercent": 10,
+    "discountAmount": 0.40,
+    "finalCharge": 3.58
 }
 ```
 
